@@ -1,0 +1,342 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1C48AF4139089A10043E2C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C48AF3139089A10043E2C7 /* Cocoa.framework */; };
+		A1C48AFE139089A20043E2C7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1C48AFC139089A20043E2C7 /* InfoPlist.strings */; };
+		A1C48B01139089A20043E2C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B00139089A20043E2C7 /* main.m */; };
+		A1C48B04139089A20043E2C7 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A1C48B02139089A20043E2C7 /* Credits.rtf */; };
+		A1C48B07139089A20043E2C7 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B06139089A20043E2C7 /* MyDocument.m */; };
+		A1C48B0A139089A20043E2C7 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1C48B08139089A20043E2C7 /* MyDocument.xib */; };
+		A1C48B0D139089A20043E2C7 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1C48B0B139089A20043E2C7 /* MainMenu.xib */; };
+		A1C48B15139089F70043E2C7 /* CanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B14139089F60043E2C7 /* CanvasView.m */; };
+		A1C48B1813908A130043E2C7 /* Canvas.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B1713908A130043E2C7 /* Canvas.m */; };
+		A1C48B1B13908A290043E2C7 /* Brush.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B1A13908A280043E2C7 /* Brush.m */; };
+		A1C48B1E139097830043E2C7 /* NSBezierPath+Simplify.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B1D1390977A0043E2C7 /* NSBezierPath+Simplify.m */; };
+		A1C48B21139180A20043E2C7 /* NSBezierPath+FitCurve.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B201391809C0043E2C7 /* NSBezierPath+FitCurve.m */; };
+		A1C48B2413918A5F0043E2C7 /* NSBezierPath+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B2313918A5B0043E2C7 /* NSBezierPath+Utilities.m */; };
+		A1C48B271391915C0043E2C7 /* Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B26139191550043E2C7 /* Geometry.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A1C48AEF139089A10043E2C7 /* VectorBrush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VectorBrush.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1C48AF3139089A10043E2C7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A1C48AF6139089A10043E2C7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		A1C48AF7139089A10043E2C7 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		A1C48AF8139089A10043E2C7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A1C48AFB139089A20043E2C7 /* VectorBrush-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "VectorBrush-Info.plist"; sourceTree = "<group>"; };
+		A1C48AFD139089A20043E2C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A1C48AFF139089A20043E2C7 /* VectorBrush-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VectorBrush-Prefix.pch"; sourceTree = "<group>"; };
+		A1C48B00139089A20043E2C7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A1C48B03139089A20043E2C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A1C48B05139089A20043E2C7 /* MyDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
+		A1C48B06139089A20043E2C7 /* MyDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
+		A1C48B09139089A20043E2C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyDocument.xib; sourceTree = "<group>"; };
+		A1C48B0C139089A20043E2C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A1C48B13139089F60043E2C7 /* CanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
+		A1C48B14139089F60043E2C7 /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
+		A1C48B1613908A130043E2C7 /* Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Canvas.h; sourceTree = "<group>"; };
+		A1C48B1713908A130043E2C7 /* Canvas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Canvas.m; sourceTree = "<group>"; };
+		A1C48B1913908A280043E2C7 /* Brush.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Brush.h; sourceTree = "<group>"; };
+		A1C48B1A13908A280043E2C7 /* Brush.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Brush.m; sourceTree = "<group>"; };
+		A1C48B1C139097790043E2C7 /* NSBezierPath+Simplify.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+Simplify.h"; sourceTree = "<group>"; };
+		A1C48B1D1390977A0043E2C7 /* NSBezierPath+Simplify.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+Simplify.m"; sourceTree = "<group>"; };
+		A1C48B1F1391809B0043E2C7 /* NSBezierPath+FitCurve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+FitCurve.h"; sourceTree = "<group>"; };
+		A1C48B201391809C0043E2C7 /* NSBezierPath+FitCurve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+FitCurve.m"; sourceTree = "<group>"; };
+		A1C48B2213918A590043E2C7 /* NSBezierPath+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBezierPath+Utilities.h"; sourceTree = "<group>"; };
+		A1C48B2313918A5B0043E2C7 /* NSBezierPath+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBezierPath+Utilities.m"; sourceTree = "<group>"; };
+		A1C48B25139191520043E2C7 /* Geometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geometry.h; sourceTree = "<group>"; };
+		A1C48B26139191550043E2C7 /* Geometry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geometry.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1C48AEC139089A10043E2C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1C48AF4139089A10043E2C7 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1C48AE4139089A10043E2C7 = {
+			isa = PBXGroup;
+			children = (
+				A1C48AF9139089A10043E2C7 /* VectorBrush */,
+				A1C48AF2139089A10043E2C7 /* Frameworks */,
+				A1C48AF0139089A10043E2C7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A1C48AF0139089A10043E2C7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1C48AEF139089A10043E2C7 /* VectorBrush.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A1C48AF2139089A10043E2C7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A1C48AF3139089A10043E2C7 /* Cocoa.framework */,
+				A1C48AF5139089A10043E2C7 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A1C48AF5139089A10043E2C7 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A1C48AF6139089A10043E2C7 /* AppKit.framework */,
+				A1C48AF7139089A10043E2C7 /* CoreData.framework */,
+				A1C48AF8139089A10043E2C7 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		A1C48AF9139089A10043E2C7 /* VectorBrush */ = {
+			isa = PBXGroup;
+			children = (
+				A1C48B05139089A20043E2C7 /* MyDocument.h */,
+				A1C48B06139089A20043E2C7 /* MyDocument.m */,
+				A1C48B13139089F60043E2C7 /* CanvasView.h */,
+				A1C48B14139089F60043E2C7 /* CanvasView.m */,
+				A1C48B1613908A130043E2C7 /* Canvas.h */,
+				A1C48B1713908A130043E2C7 /* Canvas.m */,
+				A1C48B1913908A280043E2C7 /* Brush.h */,
+				A1C48B1A13908A280043E2C7 /* Brush.m */,
+				A1C48B1C139097790043E2C7 /* NSBezierPath+Simplify.h */,
+				A1C48B1D1390977A0043E2C7 /* NSBezierPath+Simplify.m */,
+				A1C48B1F1391809B0043E2C7 /* NSBezierPath+FitCurve.h */,
+				A1C48B201391809C0043E2C7 /* NSBezierPath+FitCurve.m */,
+				A1C48B2213918A590043E2C7 /* NSBezierPath+Utilities.h */,
+				A1C48B2313918A5B0043E2C7 /* NSBezierPath+Utilities.m */,
+				A1C48B25139191520043E2C7 /* Geometry.h */,
+				A1C48B26139191550043E2C7 /* Geometry.m */,
+				A1C48B08139089A20043E2C7 /* MyDocument.xib */,
+				A1C48B0B139089A20043E2C7 /* MainMenu.xib */,
+				A1C48AFA139089A10043E2C7 /* Supporting Files */,
+			);
+			path = VectorBrush;
+			sourceTree = "<group>";
+		};
+		A1C48AFA139089A10043E2C7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A1C48AFB139089A20043E2C7 /* VectorBrush-Info.plist */,
+				A1C48AFC139089A20043E2C7 /* InfoPlist.strings */,
+				A1C48AFF139089A20043E2C7 /* VectorBrush-Prefix.pch */,
+				A1C48B00139089A20043E2C7 /* main.m */,
+				A1C48B02139089A20043E2C7 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1C48AEE139089A10043E2C7 /* VectorBrush */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1C48B10139089A20043E2C7 /* Build configuration list for PBXNativeTarget "VectorBrush" */;
+			buildPhases = (
+				A1C48AEB139089A10043E2C7 /* Sources */,
+				A1C48AEC139089A10043E2C7 /* Frameworks */,
+				A1C48AED139089A10043E2C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VectorBrush;
+			productName = VectorBrush;
+			productReference = A1C48AEF139089A10043E2C7 /* VectorBrush.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A1C48AE6139089A10043E2C7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = "Fortunate Bear, LLC";
+			};
+			buildConfigurationList = A1C48AE9139089A10043E2C7 /* Build configuration list for PBXProject "VectorBrush" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A1C48AE4139089A10043E2C7;
+			productRefGroup = A1C48AF0139089A10043E2C7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1C48AEE139089A10043E2C7 /* VectorBrush */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1C48AED139089A10043E2C7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1C48AFE139089A20043E2C7 /* InfoPlist.strings in Resources */,
+				A1C48B04139089A20043E2C7 /* Credits.rtf in Resources */,
+				A1C48B0A139089A20043E2C7 /* MyDocument.xib in Resources */,
+				A1C48B0D139089A20043E2C7 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1C48AEB139089A10043E2C7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1C48B01139089A20043E2C7 /* main.m in Sources */,
+				A1C48B07139089A20043E2C7 /* MyDocument.m in Sources */,
+				A1C48B15139089F70043E2C7 /* CanvasView.m in Sources */,
+				A1C48B1813908A130043E2C7 /* Canvas.m in Sources */,
+				A1C48B1B13908A290043E2C7 /* Brush.m in Sources */,
+				A1C48B1E139097830043E2C7 /* NSBezierPath+Simplify.m in Sources */,
+				A1C48B21139180A20043E2C7 /* NSBezierPath+FitCurve.m in Sources */,
+				A1C48B2413918A5F0043E2C7 /* NSBezierPath+Utilities.m in Sources */,
+				A1C48B271391915C0043E2C7 /* Geometry.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A1C48AFC139089A20043E2C7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1C48AFD139089A20043E2C7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A1C48B02139089A20043E2C7 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1C48B03139089A20043E2C7 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A1C48B08139089A20043E2C7 /* MyDocument.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1C48B09139089A20043E2C7 /* en */,
+			);
+			name = MyDocument.xib;
+			sourceTree = "<group>";
+		};
+		A1C48B0B139089A20043E2C7 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1C48B0C139089A20043E2C7 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A1C48B0E139089A20043E2C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A1C48B0F139089A20043E2C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A1C48B11139089A20043E2C7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VectorBrush/VectorBrush-Prefix.pch";
+				INFOPLIST_FILE = "VectorBrush/VectorBrush-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A1C48B12139089A20043E2C7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VectorBrush/VectorBrush-Prefix.pch";
+				INFOPLIST_FILE = "VectorBrush/VectorBrush-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1C48AE9139089A10043E2C7 /* Build configuration list for PBXProject "VectorBrush" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1C48B0E139089A20043E2C7 /* Debug */,
+				A1C48B0F139089A20043E2C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A1C48B10139089A20043E2C7 /* Build configuration list for PBXNativeTarget "VectorBrush" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A1C48B11139089A20043E2C7 /* Debug */,
+				A1C48B12139089A20043E2C7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1C48AE6139089A10043E2C7 /* Project object */;
+}
