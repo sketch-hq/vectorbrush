@@ -42,11 +42,11 @@
     NSBezierPath *path = [NSBezierPath bezierPath];
     [path fb_copyAttributesFrom:self];
     for (NSUInteger i = 0; i < range.length; i++) {
-        NSPoint location = [self fb_pointAtIndex:range.location + i];
+        NSBezierElement element = [self fb_elementAtIndex:range.location + i];
         if ( i == 0 )
-            [path moveToPoint:location];
+            [path moveToPoint:element.point];
         else
-            [path lineToPoint:location];
+            [path fb_appendElement:element];
     }
     return path;
 }
@@ -63,9 +63,33 @@
 
 - (void) fb_appendPath:(NSBezierPath *)path
 {
+    NSBezierElement lastElement = [self fb_elementAtIndex:[self elementCount] - 1];
     for (NSUInteger i = 0; i < [path elementCount]; i++) {
-        NSPoint location = [path fb_pointAtIndex:i];
-        [self lineToPoint:location];
+        NSBezierElement element = [path fb_elementAtIndex:i];
+        
+        // If the first element is a move to where we left off, skip it
+        if ( i == 0 && element.kind == NSMoveToBezierPathElement && NSEqualPoints(element.point, lastElement.point) )
+            continue;
+        
+        [self fb_appendElement:element];
+    }
+}
+
+- (void) fb_appendElement:(NSBezierElement)element
+{
+    switch (element.kind) {
+        case NSMoveToBezierPathElement:
+            [self moveToPoint:element.point];
+            break;
+        case NSLineToBezierPathElement:
+            [self lineToPoint:element.point];
+            break;
+        case NSCurveToBezierPathElement:
+            [self curveToPoint:element.point controlPoint1:element.controlPoints[0] controlPoint2:element.controlPoints[1]];
+            break;
+        case NSClosePathBezierPathElement:
+            [self closePath];
+            break;
     }
 }
 

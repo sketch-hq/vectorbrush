@@ -23,5 +23,6 @@ typedef struct NSBezierElement {
 
 - (void) fb_copyAttributesFrom:(NSBezierPath *)path;
 - (void) fb_appendPath:(NSBezierPath *)path;
+- (void) fb_appendElement:(NSBezierElement)element;
 
 @end

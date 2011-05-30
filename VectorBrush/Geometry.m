@@ -77,3 +77,8 @@ NSPoint NSNormalizePoint(NSPoint point)
     }
     return result;
 }
+
+NSPoint NSNegatePoint(NSPoint point)
+{
+    return NSMakePoint(-point.x, -point.y);
+}

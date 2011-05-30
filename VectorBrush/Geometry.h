@@ -20,3 +20,4 @@ CGFloat NSDotMultiplyPoint(NSPoint point1, NSPoint point2);
 CGFloat NSPointLength(NSPoint point);
 CGFloat NSPointSquaredLength(NSPoint point);
 NSPoint NSNormalizePoint(NSPoint point);
+NSPoint NSNegatePoint(NSPoint point);

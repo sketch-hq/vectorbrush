@@ -142,6 +142,7 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
 - (NSBezierPath *) fb_fitBezierUsingNaiveMethodInRange:(NSRange)range leftTangent:(NSPoint)leftTangent rightTangent:(NSPoint)rightTangent;
 - (NSPoint) fb_computeLeftTangentAtIndex:(NSUInteger)index;
 - (NSPoint) fb_computeRightTangentAtIndex:(NSUInteger)index;
+- (NSPoint) fb_computeCenterTangentAtIndex:(NSUInteger)index;
 - (NSArray *) fb_estimateParametersUsingChordLengthMethodInRange:(NSRange)range;
 - (NSBezierPath *) fb_fitBezierInRange:(NSRange)range withParameters:(NSArray *)parameters leftTangent:(NSPoint)leftTangent rightTangent:(NSPoint)rightTangent;
 
@@ -194,7 +195,14 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
         }
     }
     
-    
+    // Alright, we couldn't fit a single bezier curve to all these points no matter how much we refined the parameters.
+    //  Instead, split the points into two parts based on where the biggest error is. Build two separate curves which
+    //  we'll combine into one single NSBezierPath.
+    NSPoint centerTangent = [self fb_computeCenterTangentAtIndex:maximumIndex];
+    NSBezierPath *leftBezier = [self fb_fitCubicToRange:NSMakeRange(range.location, maximumIndex - range.location + 1) leftTangent:leftTangent rightTangent:centerTangent errorThreshold:errorThreshold];
+    NSBezierPath *rightBezier = [self fb_fitCubicToRange:NSMakeRange(maximumIndex, (range.location + range.length) - maximumIndex) leftTangent:NSNegatePoint(centerTangent) rightTangent:rightTangent errorThreshold:errorThreshold];
+    [leftBezier fb_appendPath:rightBezier];
+    return leftBezier;
 }
 
 - (NSArray *) fb_refineParameters:(NSArray *)parameters forRange:(NSRange)range bezier:(NSBezierPath *)bezier
@@ -225,7 +233,7 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
         CGFloat distance = NSPointSquaredLength(NSSubtractPoint(pointOnQ, point));
         if ( distance >= maximumError ) {
             maximumError = distance;
-            *maximumIndex = i;
+            *maximumIndex = range.location + i;
         }
     }
     return maximumError;
@@ -420,4 +428,12 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     return NSNormalizePoint( NSSubtractPoint([self fb_pointAtIndex:index - 1], [self fb_pointAtIndex:index]) );
 }
 
+- (NSPoint) fb_computeCenterTangentAtIndex:(NSUInteger)index
+{
+    // Compute the tangent unit vector with index as the center. We'll calculate the vectors on both sides
+    //  of index and then average them together.
+    NSPoint vector1 = NSSubtractPoint([self fb_pointAtIndex:index - 1], [self fb_pointAtIndex:index]);
+    NSPoint vector2 = NSSubtractPoint([self fb_pointAtIndex:index], [self fb_pointAtIndex:index + 1]);
+    return NSNormalizePoint(NSMakePoint((vector1.x + vector2.x) / 2.0, (vector1.y + vector2.y) / 2.0));
+}
 @end
