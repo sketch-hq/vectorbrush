@@ -14,6 +14,8 @@
 // Algorithm implemented here is the one described in "An Algorithm for Automatically Fitting Digitized Curves"
 //  by Philip J. Schneider contained in the book Graphics Gems
 
+static const NSUInteger FitCurveMaximumReparameterizes = 4;
+
 static CGFloat Determinant(CGFloat matrix1[2], CGFloat matrix2[2])
 {
     return matrix1[0] * matrix2[1] - matrix1[1] * matrix2[0];
@@ -45,7 +47,7 @@ static CGFloat Bernstein3(CGFloat input)
     return powf(input, 3);
 }
 
-static NSPoint Bezier(NSUInteger degree, NSBezierPath *bezier, CGFloat parameter)
+static NSPoint BezierWithPoints(NSUInteger degree, NSPoint *bezierPoints, CGFloat parameter)
 {
     // Calculate a point on the bezier curve passed in, specifically the point at parameter.
     //  We could just plug parameter into the Q(t) formula shown in the fb_fitBezierInRange: comments.
@@ -56,11 +58,10 @@ static NSPoint Bezier(NSUInteger degree, NSBezierPath *bezier, CGFloat parameter
     // See: http://www.cs.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/Bezier/de-casteljau.html
     //  for an explaination of De Casteljau's algorithm.
     
-    // With this algorithm we start out with the points in the bezier path. We assume the bezier
-    //  path is a move to and a curve to
-    NSBezierElement element1 = [bezier fb_elementAtIndex:0];
-    NSBezierElement element2 = [bezier fb_elementAtIndex:1];
-    NSPoint points[4] = {element1.point, element2.controlPoints[0], element2.controlPoints[1], element2.point};
+    // With this algorithm we start out with the points in the bezier path.    
+    NSPoint points[4] = {};
+    for (NSUInteger i = 0; i <= degree; i++)
+        points[i] = bezierPoints[i];
     
     for (NSUInteger k = 1; k <= degree; k++) {
         for (NSUInteger i = 0; i <= (degree - k); i++) {
@@ -72,9 +73,71 @@ static NSPoint Bezier(NSUInteger degree, NSBezierPath *bezier, CGFloat parameter
     return points[0]; // we'll end up with just one point, which is handy, 'cause that's what we want
 }
 
+static NSPoint Bezier(NSUInteger degree, NSBezierPath *bezier, CGFloat parameter)
+{
+    // With this algorithm we start out with the points in the bezier path. We assume the bezier
+    //  path is a move to and a curve to
+    NSBezierElement element1 = [bezier fb_elementAtIndex:0];
+    NSBezierElement element2 = [bezier fb_elementAtIndex:1];
+    NSPoint bezierPoints[4] = {element1.point, element2.controlPoints[0], element2.controlPoints[1], element2.point};
+    
+    return BezierWithPoints(degree, bezierPoints, parameter);
+}
+
+static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parameter)
+{
+    // Use Newton's Method to refine our parameter. In general, that formula is:
+    //
+    //  parameter = parameter - f(parameter) / f'(parameter)
+    //
+    // In our case:
+    //
+    //  f(parameter) = (Q(parameter) - point) * Q'(parameter) = 0
+    //
+    // Where Q'(parameter) is tangent to the curve at Q(parameter) and orthogonal to [Q(parameter) - P]
+    //
+    // Taking the derivative gives us:
+    //
+    //  f'(parameter) = (Q(parameter) - point) * Q''(parameter) + Q'(parameter) * Q'(parameter)
+    //
+    
+    // We assume the bezier path is a move to and a curve to
+    NSBezierElement element1 = [bezier fb_elementAtIndex:0];
+    NSBezierElement element2 = [bezier fb_elementAtIndex:1];
+    NSPoint bezierPoints[4] = {element1.point, element2.controlPoints[0], element2.controlPoints[1], element2.point};
+
+    // Compute Q(parameter)
+    NSPoint qAtParameter = BezierWithPoints(3, bezierPoints, parameter);
+    
+    // Compute Q'(parameter)
+    NSPoint qPrimePoints[3] = {};
+    for (NSUInteger i = 0; i < 3; i++) {
+        qPrimePoints[i].x = (bezierPoints[i + 1].x - bezierPoints[i].x) * 3.0;
+        qPrimePoints[i].y = (bezierPoints[i + 1].y - bezierPoints[i].y) * 3.0;
+    }
+    NSPoint qPrimeAtParameter = BezierWithPoints(2, qPrimePoints, parameter);
+    
+    // Compute Q''(parameter)
+    NSPoint qPrimePrimePoints[2] = {};
+    for (NSUInteger i = 0; i < 2; i++) {
+        qPrimePrimePoints[i].x = (qPrimePoints[i + 1].x - qPrimePoints[i].x) * 2.0;
+        qPrimePrimePoints[i].y = (qPrimePoints[i + 1].y - qPrimePoints[i].y) * 2.0;        
+    }
+    NSPoint qPrimePrimeAtParameter = BezierWithPoints(1, qPrimePrimePoints, parameter);
+    
+    // Compute f(parameter) and f'(parameter)
+    NSPoint qMinusPoint = NSSubtractPoint(qAtParameter, point);
+    CGFloat fAtParameter = NSDotMultiplyPoint(qMinusPoint, qPrimeAtParameter);
+    CGFloat fPrimeAtParameter = NSDotMultiplyPoint(qMinusPoint, qPrimePrimeAtParameter) + NSDotMultiplyPoint(qPrimeAtParameter, qPrimeAtParameter);
+    
+    // Newton's method!
+    return parameter - (fAtParameter / fPrimeAtParameter);
+}
+
 @interface NSBezierPath (FitCurvePrivate)
 
 - (NSBezierPath *) fb_fitCubicToRange:(NSRange)range leftTangent:(NSPoint)leftTangent rightTangent:(NSPoint)rightTangent errorThreshold:(CGFloat)errorThreshold;
+- (NSArray *) fb_refineParameters:(NSArray *)parameters forRange:(NSRange)range bezier:(NSBezierPath *)bezier;
 - (CGFloat) fb_findMaximumErrorForBezier:(NSBezierPath *)bezier inRange:(NSRange)range parameters:(NSArray *)parameters maximumIndex:(NSUInteger *)maximumIndex;
 - (NSBezierPath *) fb_fitBezierUsingNaiveMethodInRange:(NSRange)range leftTangent:(NSPoint)leftTangent rightTangent:(NSPoint)rightTangent;
 - (NSPoint) fb_computeLeftTangentAtIndex:(NSUInteger)index;
@@ -117,7 +180,31 @@ static NSPoint Bezier(NSUInteger degree, NSBezierPath *bezier, CGFloat parameter
     if ( error < errorThreshold )
         return bezier;
     
+    // Huh. That wasn't good enough. Well, our estimated parameters probably sucked, so see if it makes sense to try
+    //  to refine them. If error is huge, it probably means that probably won't help, so in that case just skip it.
+    if ( error < (errorThreshold * errorThreshold) ) {
+        for (NSUInteger i = 0; i < FitCurveMaximumReparameterizes; i++) {
+            parameters = [self fb_refineParameters:parameters forRange:range bezier:bezier];
+            
+            // OK, try again with the new parameters
+            bezier = [self fb_fitBezierInRange:range withParameters:parameters leftTangent:leftTangent rightTangent:rightTangent];
+            error = [self fb_findMaximumErrorForBezier:bezier inRange:range parameters:parameters maximumIndex:&maximumIndex];
+            if ( error < errorThreshold )
+                return bezier; // sweet, it worked!
+        }
+    }
     
+    
+}
+
+- (NSArray *) fb_refineParameters:(NSArray *)parameters forRange:(NSRange)range bezier:(NSBezierPath *)bezier
+{
+    // Use Newton's Method to refine our parameters.
+    NSMutableArray *refinedParameters = [NSMutableArray arrayWithCapacity:range.length];
+    for (NSUInteger i = 0; i < range.length; i++) {
+        [refinedParameters addObject:[NSNumber numberWithFloat:NewtonsMethod(bezier, [self fb_pointAtIndex:range.location + i], [[parameters objectAtIndex:i] floatValue])]];
+    }
+    return refinedParameters;
 }
 
 - (CGFloat) fb_findMaximumErrorForBezier:(NSBezierPath *)bezier inRange:(NSRange)range parameters:(NSArray *)parameters maximumIndex:(NSUInteger *)maximumIndex
