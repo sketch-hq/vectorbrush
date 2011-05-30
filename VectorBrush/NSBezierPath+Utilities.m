@@ -63,15 +63,20 @@
 
 - (void) fb_appendPath:(NSBezierPath *)path
 {
-    NSBezierElement lastElement = [self fb_elementAtIndex:[self elementCount] - 1];
+    NSBezierElement previousElement = [self fb_elementAtIndex:[self elementCount] - 1];
     for (NSUInteger i = 0; i < [path elementCount]; i++) {
         NSBezierElement element = [path fb_elementAtIndex:i];
         
         // If the first element is a move to where we left off, skip it
-        if ( i == 0 && element.kind == NSMoveToBezierPathElement && NSEqualPoints(element.point, lastElement.point) )
-            continue;
+        if ( element.kind == NSMoveToBezierPathElement ) {
+            if ( NSEqualPoints(element.point, previousElement.point) )
+                continue;
+            else
+                element.kind = NSLineToBezierPathElement; // change it to a line to
+        }
         
         [self fb_appendElement:element];
+        previousElement = element;
     }
 }
 
