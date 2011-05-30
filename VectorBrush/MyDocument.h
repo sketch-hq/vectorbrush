@@ -8,8 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class CanvasView;
+
 @interface MyDocument : NSDocument {
 @private
+    IBOutlet CanvasView *_view;
 }
+
+- (IBAction) toggleShowPoints:(id)sender;
+- (IBAction) toggleSimplifyPath:(id)sender;
+- (IBAction) toggleFitCurve:(id)sender;
 
 @end

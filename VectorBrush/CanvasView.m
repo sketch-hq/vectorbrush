@@ -60,4 +60,34 @@
 	[_brush mouseUp:theEvent inView:self onCanvas:_canvas];
 }
 
+- (BOOL) showPoints
+{
+    return _canvas.showPoints;
+}
+
+- (void) setShowPoints:(BOOL)showPoints
+{
+    _canvas.showPoints = showPoints;
+}
+
+- (BOOL) simplify
+{
+    return _canvas.simplify;
+}
+
+- (void) setSimplify:(BOOL)simplify
+{
+    _canvas.simplify = simplify;
+}
+
+- (BOOL) fitCurve
+{
+    return _canvas.fitCurve;
+}
+
+- (void) setFitCurve:(BOOL)fitCurve
+{
+    _canvas.fitCurve = fitCurve;
+}
+
 @end

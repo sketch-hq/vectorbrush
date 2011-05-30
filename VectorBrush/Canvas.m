@@ -18,6 +18,10 @@ static NSRect BoxFrame(NSPoint point)
 
 @implementation Canvas
 
+@synthesize showPoints=_showPoints;
+@synthesize simplify=_simplify;
+@synthesize fitCurve=_fitCurve;
+
 - (id)init
 {
     self = [super init];

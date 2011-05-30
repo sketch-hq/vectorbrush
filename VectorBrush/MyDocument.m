@@ -7,6 +7,7 @@
 //
 
 #import "MyDocument.h"
+#import "CanvasView.h"
 
 @implementation MyDocument
 
@@ -52,6 +53,38 @@
     if (outError) {
         *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
     }
+    return YES;
+}
+
+- (IBAction) toggleShowPoints:(id)sender
+{
+    _view.showPoints = !_view.showPoints;
+    [_view setNeedsDisplay:YES];
+}
+
+- (IBAction) toggleSimplifyPath:(id)sender
+{
+    _view.simplify = !_view.simplify;
+    [_view setNeedsDisplay:YES];    
+}
+
+- (IBAction) toggleFitCurve:(id)sender
+{
+    _view.fitCurve = !_view.fitCurve;
+    [_view setNeedsDisplay:YES];
+}
+
+- (BOOL)validateUserInterfaceItem:(id < NSValidatedUserInterfaceItem >)anItem
+{
+    NSMenuItem *menuItem = (NSMenuItem *)anItem;
+    if ( [anItem action] == @selector(toggleShowPoints:) ) {
+        [menuItem setState:_view.showPoints ? NSOnState : NSOffState];
+    } else if ( [anItem action] == @selector(toggleSimplifyPath:) ) {
+        [menuItem setState:_view.simplify ? NSOnState : NSOffState];        
+    } else if ( [anItem action] == @selector(toggleFitCurve:) ) {
+        [menuItem setState:_view.fitCurve ? NSOnState : NSOffState];
+    }
+    
     return YES;
 }
 

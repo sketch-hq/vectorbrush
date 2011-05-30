@@ -16,4 +16,8 @@
     Brush *_brush;
 }
 
+@property BOOL showPoints;
+@property BOOL simplify;
+@property BOOL fitCurve;
+
 @end
