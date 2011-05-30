@@ -18,4 +18,5 @@ NSPoint NSScalePoint(NSPoint point, CGFloat scale);
 NSPoint NSSubtractPoint(NSPoint point1, NSPoint point2);
 CGFloat NSDotMultiplyPoint(NSPoint point1, NSPoint point2);
 CGFloat NSPointLength(NSPoint point);
+CGFloat NSPointSquaredLength(NSPoint point);
 NSPoint NSNormalizePoint(NSPoint point);

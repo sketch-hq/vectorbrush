@@ -62,6 +62,11 @@ CGFloat NSPointLength(NSPoint point)
     return sqrtf((point.x * point.x) + (point.y * point.y));
 }
 
+CGFloat NSPointSquaredLength(NSPoint point)
+{
+    return (point.x * point.x) + (point.y * point.y);
+}
+
 NSPoint NSNormalizePoint(NSPoint point)
 {
     NSPoint result = point;

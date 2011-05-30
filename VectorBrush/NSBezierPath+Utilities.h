@@ -8,10 +8,17 @@
 
 #import <Cocoa/Cocoa.h>
 
+typedef struct NSBezierElement {
+    NSBezierPathElement kind;
+    NSPoint point;
+    NSPoint controlPoints[2];
+} NSBezierElement;
 
 @interface NSBezierPath (FBUtilities)
 
 - (NSPoint) fb_pointAtIndex:(NSUInteger)index;
+- (NSBezierElement) fb_elementAtIndex:(NSUInteger)index;
+
 - (NSBezierPath *) fb_subpathWithRange:(NSRange)range;
 
 - (void) fb_copyAttributesFrom:(NSBezierPath *)path;

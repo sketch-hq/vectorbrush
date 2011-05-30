@@ -13,9 +13,28 @@
 
 - (NSPoint) fb_pointAtIndex:(NSUInteger)index
 {
+    return [self fb_elementAtIndex:index].point;
+}
+
+- (NSBezierElement) fb_elementAtIndex:(NSUInteger)index
+{
+    NSBezierElement element = {};
     NSPoint points[3] = {};
-    [self elementAtIndex:index associatedPoints:points];
-    return points[0];
+    element.kind = [self elementAtIndex:index associatedPoints:points];
+    switch (element.kind) {
+        case NSMoveToBezierPathElement:
+        case NSLineToBezierPathElement:
+        case NSClosePathBezierPathElement:
+            element.point = points[0];
+            break;
+            
+        case NSCurveToBezierPathElement:
+            element.controlPoints[0] = points[0];
+            element.controlPoints[1] = points[1];
+            element.point = points[2];
+            break;
+    }
+    return element;
 }
 
 - (NSBezierPath *) fb_subpathWithRange:(NSRange)range

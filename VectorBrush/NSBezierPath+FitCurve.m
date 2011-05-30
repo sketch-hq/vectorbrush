@@ -11,6 +11,9 @@
 #import "Geometry.h"
 #import "math.h"
 
+// Algorithm implemented here is the one described in "An Algorithm for Automatically Fitting Digitized Curves"
+//  by Philip J. Schneider contained in the book Graphics Gems
+
 static CGFloat Determinant(CGFloat matrix1[2], CGFloat matrix2[2])
 {
     return matrix1[0] * matrix2[1] - matrix1[1] * matrix2[0];
@@ -40,6 +43,33 @@ static CGFloat Bernstein2(CGFloat input)
 static CGFloat Bernstein3(CGFloat input)
 {
     return powf(input, 3);
+}
+
+static NSPoint Bezier(NSUInteger degree, NSBezierPath *bezier, CGFloat parameter)
+{
+    // Calculate a point on the bezier curve passed in, specifically the point at parameter.
+    //  We could just plug parameter into the Q(t) formula shown in the fb_fitBezierInRange: comments.
+    //  However, that method isn't numerically stable, meaning it amplifies any errors, which is bad
+    //  seeing we're using floating point numbers with limited precision. Instead we'll use
+    //  De Casteljau's algorithm.
+    //
+    // See: http://www.cs.mtu.edu/~shene/COURSES/cs3621/NOTES/spline/Bezier/de-casteljau.html
+    //  for an explaination of De Casteljau's algorithm.
+    
+    // With this algorithm we start out with the points in the bezier path. We assume the bezier
+    //  path is a move to and a curve to
+    NSBezierElement element1 = [bezier fb_elementAtIndex:0];
+    NSBezierElement element2 = [bezier fb_elementAtIndex:1];
+    NSPoint points[4] = {element1.point, element2.controlPoints[0], element2.controlPoints[1], element2.point};
+    
+    for (NSUInteger k = 1; k <= degree; k++) {
+        for (NSUInteger i = 0; i <= (degree - k); i++) {
+            points[i].x = (1.0 - parameter) * points[i].x + parameter * points[i + 1].x;
+            points[i].y = (1.0 - parameter) * points[i].y + parameter * points[i + 1].y;            
+        }
+    }
+    
+    return points[0]; // we'll end up with just one point, which is handy, 'cause that's what we want
 }
 
 @interface NSBezierPath (FitCurvePrivate)
@@ -102,7 +132,15 @@ static CGFloat Bernstein3(CGFloat input)
     //  point in the generated bezier curve, squares it, and adds all the differences up (i.e. squared errors).
     //  This tells us how far off our curve is from our points we're trying to fit.    
     CGFloat maximumError = 0.0;
-    
+    for (NSUInteger i = 1; i < (range.length - 1); i++) {
+        NSPoint pointOnQ = Bezier(3, bezier, [[parameters objectAtIndex:i] floatValue]); // Calculate Q(parameters[i])
+        NSPoint point = [self fb_pointAtIndex:range.location + i];
+        CGFloat distance = NSPointSquaredLength(NSSubtractPoint(pointOnQ, point));
+        if ( distance >= maximumError ) {
+            maximumError = distance;
+            *maximumIndex = i;
+        }
+    }
     return maximumError;
 }
 
