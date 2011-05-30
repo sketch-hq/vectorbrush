@@ -8,6 +8,13 @@
 
 #import "Canvas.h"
 #import "NSBezierPath+Simplify.h"
+#import "NSBezierPath+FitCurve.h"
+#import "NSBezierPath+Utilities.h"
+
+static NSRect BoxFrame(NSPoint point)
+{
+    return NSMakeRect(floorf(point.x - 2) - 0.5, floorf(point.y - 2) - 0.5, 5, 5);
+}
 
 @implementation Canvas
 
@@ -18,6 +25,7 @@
         _paths = [[NSMutableArray alloc] initWithCapacity:3];
         _showPoints = YES;
         _simplify = YES;
+        _fitCurve = YES;
     }
     
     return self;
@@ -52,10 +60,15 @@
 {
     NSDictionary *object = [_paths lastObject];
     NSBezierPath *path = [object objectForKey:@"path"];
+    NSBezierPath *originalPath = path;
     NSInteger originalCount = [path elementCount];
     
-    if ( _simplify ) {
+    if ( _simplify )
         path = [path fb_simplify:1];
+    if ( _fitCurve )
+        path = [path fb_fitCurve:4];
+
+    if ( originalPath != path ) {
         NSMutableDictionary *newObject = [[object mutableCopy] autorelease];
         [newObject setObject:path forKey:@"path"];
         [_paths replaceObjectAtIndex:[_paths indexOfObject:object] withObject:newObject];
@@ -81,16 +94,19 @@
     if ( _showPoints ) {
         for (NSDictionary *object in _paths) {
             NSBezierPath *path = [object objectForKey:@"path"];
-            [[NSColor orangeColor] set];
             [NSBezierPath setDefaultLineWidth:1.0];
             [NSBezierPath setDefaultLineCapStyle:NSButtLineCapStyle];
             [NSBezierPath setDefaultLineJoinStyle:NSMiterLineJoinStyle];
             
             for (NSInteger i = 0; i < [path elementCount]; i++) {
-                NSPoint points[3] = {};
-                [path elementAtIndex:i associatedPoints:points];
-                NSRect handleFrame = NSMakeRect(floorf(points[0].x - 2) - 0.5, floorf(points[0].y - 2) - 0.5, 5, 5);
-                [NSBezierPath strokeRect:handleFrame];
+                NSBezierElement element = [path fb_elementAtIndex:i];
+                [[NSColor orangeColor] set];
+                [NSBezierPath strokeRect:BoxFrame(element.point)];
+                if ( element.kind == NSCurveToBezierPathElement ) {
+                    [[NSColor blackColor] set];
+                    [NSBezierPath strokeRect:BoxFrame(element.controlPoints[0])];                    
+                    [NSBezierPath strokeRect:BoxFrame(element.controlPoints[1])];                    
+                }
             }
         }
     }

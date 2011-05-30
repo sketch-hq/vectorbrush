@@ -13,6 +13,7 @@
     NSMutableArray *_paths;
     BOOL _showPoints;
     BOOL _simplify;
+    BOOL _fitCurve;
 }
 
 - (void) beginPathAtLocation:(NSPoint)location withWidth:(CGFloat)width color:(NSColor *)color;
