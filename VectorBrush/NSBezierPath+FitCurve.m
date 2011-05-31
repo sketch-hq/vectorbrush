@@ -126,9 +126,9 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     NSPoint qPrimePrimeAtParameter = BezierWithPoints(1, qPrimePrimePoints, parameter);
     
     // Compute f(parameter) and f'(parameter)
-    NSPoint qMinusPoint = NSSubtractPoint(qAtParameter, point);
-    CGFloat fAtParameter = NSDotMultiplyPoint(qMinusPoint, qPrimeAtParameter);
-    CGFloat fPrimeAtParameter = NSDotMultiplyPoint(qMinusPoint, qPrimePrimeAtParameter) + NSDotMultiplyPoint(qPrimeAtParameter, qPrimeAtParameter);
+    NSPoint qMinusPoint = FBSubtractPoint(qAtParameter, point);
+    CGFloat fAtParameter = FBDotMultiplyPoint(qMinusPoint, qPrimeAtParameter);
+    CGFloat fPrimeAtParameter = FBDotMultiplyPoint(qMinusPoint, qPrimePrimeAtParameter) + FBDotMultiplyPoint(qPrimeAtParameter, qPrimeAtParameter);
     
     // Newton's method!
     return parameter - (fAtParameter / fPrimeAtParameter);
@@ -200,7 +200,7 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     //  we'll combine into one single NSBezierPath.
     NSPoint centerTangent = [self fb_computeCenterTangentAtIndex:maximumIndex];
     NSBezierPath *leftBezier = [self fb_fitCubicToRange:NSMakeRange(range.location, maximumIndex - range.location + 1) leftTangent:leftTangent rightTangent:centerTangent errorThreshold:errorThreshold];
-    NSBezierPath *rightBezier = [self fb_fitCubicToRange:NSMakeRange(maximumIndex, (range.location + range.length) - maximumIndex) leftTangent:NSNegatePoint(centerTangent) rightTangent:rightTangent errorThreshold:errorThreshold];
+    NSBezierPath *rightBezier = [self fb_fitCubicToRange:NSMakeRange(maximumIndex, (range.location + range.length) - maximumIndex) leftTangent:FBNegatePoint(centerTangent) rightTangent:rightTangent errorThreshold:errorThreshold];
     [leftBezier fb_appendPath:rightBezier];
     return leftBezier;
 }
@@ -230,7 +230,7 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     for (NSUInteger i = 1; i < (range.length - 1); i++) {
         NSPoint pointOnQ = Bezier(3, bezier, [[parameters objectAtIndex:i] floatValue]); // Calculate Q(parameters[i])
         NSPoint point = [self fb_pointAtIndex:range.location + i];
-        CGFloat distance = NSPointSquaredLength(NSSubtractPoint(pointOnQ, point));
+        CGFloat distance = FBPointSquaredLength(FBSubtractPoint(pointOnQ, point));
         if ( distance >= maximumError ) {
             maximumError = distance;
             *maximumIndex = range.location + i;
@@ -250,10 +250,10 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     NSBezierPath *result = [NSBezierPath bezierPath];
     [result fb_copyAttributesFrom:self];
     
-    CGFloat thirdOfDistance = NSDistanceBetweenPoints([self fb_pointAtIndex:range.location + 1], [self fb_pointAtIndex:range.location]) / 3.0;
+    CGFloat thirdOfDistance = FBDistanceBetweenPoints([self fb_pointAtIndex:range.location + 1], [self fb_pointAtIndex:range.location]) / 3.0;
     
     [result moveToPoint:[self fb_pointAtIndex:range.location]];
-    [result curveToPoint:[self fb_pointAtIndex:range.location + 1] controlPoint1:NSAddPoint([self fb_pointAtIndex:range.location], NSUnitScalePoint(leftTangent, thirdOfDistance)) controlPoint2:NSAddPoint([self fb_pointAtIndex:range.location + 1], NSUnitScalePoint(rightTangent, thirdOfDistance))];
+    [result curveToPoint:[self fb_pointAtIndex:range.location + 1] controlPoint1:FBAddPoint([self fb_pointAtIndex:range.location], FBUnitScalePoint(leftTangent, thirdOfDistance)) controlPoint2:FBAddPoint([self fb_pointAtIndex:range.location + 1], FBUnitScalePoint(rightTangent, thirdOfDistance))];
     
     return result;
 }
@@ -321,8 +321,8 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     NSPoint *a1 = (NSPoint *)calloc(range.length, sizeof(NSPoint));
     NSPoint *a2 = (NSPoint *)calloc(range.length, sizeof(NSPoint));    
     for (NSUInteger i = 0; i < range.length; i++) {
-        a1[i] = NSUnitScalePoint(leftTangent, Bernstein1([[parameters objectAtIndex:i] floatValue]));
-        a2[i] = NSUnitScalePoint(rightTangent, Bernstein2([[parameters objectAtIndex:i] floatValue]));
+        a1[i] = FBUnitScalePoint(leftTangent, Bernstein1([[parameters objectAtIndex:i] floatValue]));
+        a2[i] = FBUnitScalePoint(rightTangent, Bernstein2([[parameters objectAtIndex:i] floatValue]));
     }
     
     // Create the C1, C2, and X matrices
@@ -333,19 +333,19 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     NSPoint leftEndPoint = [self fb_pointAtIndex:range.location];
     NSPoint rightEndPoint = [self fb_pointAtIndex:range.location + range.length - 1];
     for (NSUInteger i = 0; i < range.length; i++) {
-        c1[0] += NSDotMultiplyPoint(a1[i], a1[i]);
-        c1[1] += NSDotMultiplyPoint(a1[i], a2[i]);
-        c2[0] += NSDotMultiplyPoint(a1[i], a2[i]);
-        c2[1] += NSDotMultiplyPoint(a2[i], a2[i]);
+        c1[0] += FBDotMultiplyPoint(a1[i], a1[i]);
+        c1[1] += FBDotMultiplyPoint(a1[i], a2[i]);
+        c2[0] += FBDotMultiplyPoint(a1[i], a2[i]);
+        c2[1] += FBDotMultiplyPoint(a2[i], a2[i]);
         
-        partOfX = NSSubtractPoint([self fb_pointAtIndex:range.location + i], 
-                                  NSAddPoint(NSScalePoint(leftEndPoint, Bernstein0([[parameters objectAtIndex:i] floatValue])),
-                                             NSAddPoint(NSScalePoint(leftEndPoint, Bernstein1([[parameters objectAtIndex:i] floatValue])),
-                                                        NSAddPoint(NSScalePoint(rightEndPoint, Bernstein2([[parameters objectAtIndex:i] floatValue])),
-                                                                   NSScalePoint(rightEndPoint, Bernstein3([[parameters objectAtIndex:i] floatValue]))))));
+        partOfX = FBSubtractPoint([self fb_pointAtIndex:range.location + i], 
+                                  FBAddPoint(FBScalePoint(leftEndPoint, Bernstein0([[parameters objectAtIndex:i] floatValue])),
+                                             FBAddPoint(FBScalePoint(leftEndPoint, Bernstein1([[parameters objectAtIndex:i] floatValue])),
+                                                        FBAddPoint(FBScalePoint(rightEndPoint, Bernstein2([[parameters objectAtIndex:i] floatValue])),
+                                                                   FBScalePoint(rightEndPoint, Bernstein3([[parameters objectAtIndex:i] floatValue]))))));
         
-        x[0] += NSDotMultiplyPoint(partOfX, a1[i]);
-        x[1] += NSDotMultiplyPoint(partOfX, a2[i]);
+        x[0] += FBDotMultiplyPoint(partOfX, a1[i]);
+        x[1] += FBDotMultiplyPoint(partOfX, a2[i]);
     }
     
     // We're done with the A values, so free that up
@@ -365,14 +365,14 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     
     // If the alpha values are too small or negative, things aren't going to work out well. Fall back
     //  to the simple heuristic
-    CGFloat verySmallValue = 1.0e-6 * NSDistanceBetweenPoints(leftEndPoint, rightEndPoint);
+    CGFloat verySmallValue = 1.0e-6 * FBDistanceBetweenPoints(leftEndPoint, rightEndPoint);
     if ( leftAlpha < verySmallValue || rightAlpha < verySmallValue )
         return [self fb_fitBezierUsingNaiveMethodInRange:range leftTangent:leftTangent rightTangent:rightTangent];
     
     // We already have the end points, so we just need the control points. Use alpha values
     //  to calculate those
-    NSPoint leftControlPoint = NSAddPoint(NSUnitScalePoint(leftTangent, leftAlpha), leftEndPoint);
-    NSPoint rightControlPoint = NSAddPoint(NSUnitScalePoint(rightTangent, rightAlpha), rightEndPoint);
+    NSPoint leftControlPoint = FBAddPoint(FBUnitScalePoint(leftTangent, leftAlpha), leftEndPoint);
+    NSPoint rightControlPoint = FBAddPoint(FBUnitScalePoint(rightTangent, rightAlpha), rightEndPoint);
     
     // Create the bezier path based on the end and control points we calculated
     NSBezierPath *path = [NSBezierPath bezierPath];
@@ -402,7 +402,7 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     CGFloat totalDistance = 0.0;
     for (NSUInteger i = 1; i < range.length; i++) {
         // Calculate the total distance along the curve up to this point
-        totalDistance += NSDistanceBetweenPoints([self fb_pointAtIndex:range.location + i], [self fb_pointAtIndex:range.location + i - 1]);
+        totalDistance += FBDistanceBetweenPoints([self fb_pointAtIndex:range.location + i], [self fb_pointAtIndex:range.location + i - 1]);
         [distances addObject:[NSNumber numberWithFloat:totalDistance]];
     }
     
@@ -418,22 +418,22 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
 {
     // Compute the tangent unit vector by computing the vector between the left two points,
     //  then normalizing it so its unit vector.
-    return NSNormalizePoint( NSSubtractPoint([self fb_pointAtIndex:index + 1], [self fb_pointAtIndex:index]) );
+    return FBNormalizePoint( FBSubtractPoint([self fb_pointAtIndex:index + 1], [self fb_pointAtIndex:index]) );
 }
 
 - (NSPoint) fb_computeRightTangentAtIndex:(NSUInteger)index
 {
     // Compute the tangent unit vector by computing the vector between the right two points,
     //  then normalizing it so its unit vector.
-    return NSNormalizePoint( NSSubtractPoint([self fb_pointAtIndex:index - 1], [self fb_pointAtIndex:index]) );
+    return FBNormalizePoint( FBSubtractPoint([self fb_pointAtIndex:index - 1], [self fb_pointAtIndex:index]) );
 }
 
 - (NSPoint) fb_computeCenterTangentAtIndex:(NSUInteger)index
 {
     // Compute the tangent unit vector with index as the center. We'll calculate the vectors on both sides
     //  of index and then average them together.
-    NSPoint vector1 = NSSubtractPoint([self fb_pointAtIndex:index - 1], [self fb_pointAtIndex:index]);
-    NSPoint vector2 = NSSubtractPoint([self fb_pointAtIndex:index], [self fb_pointAtIndex:index + 1]);
-    return NSNormalizePoint(NSMakePoint((vector1.x + vector2.x) / 2.0, (vector1.y + vector2.y) / 2.0));
+    NSPoint vector1 = FBSubtractPoint([self fb_pointAtIndex:index - 1], [self fb_pointAtIndex:index]);
+    NSPoint vector2 = FBSubtractPoint([self fb_pointAtIndex:index], [self fb_pointAtIndex:index + 1]);
+    return FBNormalizePoint(NSMakePoint((vector1.x + vector2.x) / 2.0, (vector1.y + vector2.y) / 2.0));
 }
 @end

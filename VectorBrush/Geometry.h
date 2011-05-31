@@ -9,15 +9,15 @@
 #import <Cocoa/Cocoa.h>
 
 
-CGFloat NSDistanceBetweenPoints(NSPoint point1, NSPoint point2);
-CGFloat NSDistancePointToLine(NSPoint point, NSPoint lineStartPoint, NSPoint lineEndPoint);
+CGFloat FBDistanceBetweenPoints(NSPoint point1, NSPoint point2);
+CGFloat FBDistancePointToLine(NSPoint point, NSPoint lineStartPoint, NSPoint lineEndPoint);
 
-NSPoint NSAddPoint(NSPoint point1, NSPoint point2);
-NSPoint NSUnitScalePoint(NSPoint point, CGFloat scale);
-NSPoint NSScalePoint(NSPoint point, CGFloat scale);
-NSPoint NSSubtractPoint(NSPoint point1, NSPoint point2);
-CGFloat NSDotMultiplyPoint(NSPoint point1, NSPoint point2);
-CGFloat NSPointLength(NSPoint point);
-CGFloat NSPointSquaredLength(NSPoint point);
-NSPoint NSNormalizePoint(NSPoint point);
-NSPoint NSNegatePoint(NSPoint point);
+NSPoint FBAddPoint(NSPoint point1, NSPoint point2);
+NSPoint FBScalePoint(NSPoint point, CGFloat scale);
+NSPoint FBUnitScalePoint(NSPoint point, CGFloat scale);
+NSPoint FBSubtractPoint(NSPoint point1, NSPoint point2);
+CGFloat FBDotMultiplyPoint(NSPoint point1, NSPoint point2);
+CGFloat FBPointLength(NSPoint point);
+CGFloat FBPointSquaredLength(NSPoint point);
+NSPoint FBNormalizePoint(NSPoint point);
+NSPoint FBNegatePoint(NSPoint point);

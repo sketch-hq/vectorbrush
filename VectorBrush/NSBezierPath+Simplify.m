@@ -24,7 +24,7 @@
     
     // Find the point the furtherest away
     for (NSUInteger i = 1; i < ([self elementCount] - 1); i++) {
-        CGFloat distance = NSDistancePointToLine([self fb_pointAtIndex:i], [self fb_pointAtIndex:0], [self fb_pointAtIndex:[self elementCount] - 1]);
+        CGFloat distance = FBDistancePointToLine([self fb_pointAtIndex:i], [self fb_pointAtIndex:0], [self fb_pointAtIndex:[self elementCount] - 1]);
         if ( distance > maximumDistance ) {
             maximumDistance = distance;
             maximumIndex = i;

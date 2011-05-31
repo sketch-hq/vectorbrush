@@ -9,32 +9,32 @@
 #import "Geometry.h"
 
 
-CGFloat NSDistanceBetweenPoints(NSPoint point1, NSPoint point2)
+CGFloat FBDistanceBetweenPoints(NSPoint point1, NSPoint point2)
 {
     CGFloat xDelta = point2.x - point1.x;
     CGFloat yDelta = point2.y - point1.y;
     return sqrtf(xDelta * xDelta + yDelta * yDelta);
 }
 
-CGFloat NSDistancePointToLine(NSPoint point, NSPoint lineStartPoint, NSPoint lineEndPoint)
+CGFloat FBDistancePointToLine(NSPoint point, NSPoint lineStartPoint, NSPoint lineEndPoint)
 {
-    CGFloat lineLength = NSDistanceBetweenPoints(lineStartPoint, lineEndPoint);
+    CGFloat lineLength = FBDistanceBetweenPoints(lineStartPoint, lineEndPoint);
     if ( lineLength == 0 )
         return 0;
     CGFloat u = ((point.x - lineStartPoint.x) * (lineEndPoint.x - lineStartPoint.x) + (point.y - lineStartPoint.y) * (lineEndPoint.y - lineStartPoint.y)) / (lineLength * lineLength);
     NSPoint intersectionPoint = NSMakePoint(lineStartPoint.x + u * (lineEndPoint.x - lineStartPoint.x), lineStartPoint.y + u * (lineEndPoint.y - lineStartPoint.y));
-    return NSDistanceBetweenPoints(point, intersectionPoint);
+    return FBDistanceBetweenPoints(point, intersectionPoint);
 }
 
-NSPoint NSAddPoint(NSPoint point1, NSPoint point2)
+NSPoint FBAddPoint(NSPoint point1, NSPoint point2)
 {
     return NSMakePoint(point1.x + point2.x, point1.y + point2.y);
 }
 
-NSPoint NSUnitScalePoint(NSPoint point, CGFloat scale)
+NSPoint FBUnitScalePoint(NSPoint point, CGFloat scale)
 {
     NSPoint result = point;
-    CGFloat length = NSPointLength(point);
+    CGFloat length = FBPointLength(point);
     if ( length != 0.0 ) {
         result.x *= scale/length;
         result.y *= scale/length;
@@ -42,35 +42,35 @@ NSPoint NSUnitScalePoint(NSPoint point, CGFloat scale)
     return result;
 }
 
-NSPoint NSScalePoint(NSPoint point, CGFloat scale)
+NSPoint FBScalePoint(NSPoint point, CGFloat scale)
 {
     return NSMakePoint(point.x * scale, point.y * scale);
 }
 
-CGFloat NSDotMultiplyPoint(NSPoint point1, NSPoint point2)
+CGFloat FBDotMultiplyPoint(NSPoint point1, NSPoint point2)
 {
     return point1.x * point2.x + point1.y * point2.y;
 }
 
-NSPoint NSSubtractPoint(NSPoint point1, NSPoint point2)
+NSPoint FBSubtractPoint(NSPoint point1, NSPoint point2)
 {
     return NSMakePoint(point1.x - point2.x, point1.y - point2.y);
 }
 
-CGFloat NSPointLength(NSPoint point)
+CGFloat FBPointLength(NSPoint point)
 {
     return sqrtf((point.x * point.x) + (point.y * point.y));
 }
 
-CGFloat NSPointSquaredLength(NSPoint point)
+CGFloat FBPointSquaredLength(NSPoint point)
 {
     return (point.x * point.x) + (point.y * point.y);
 }
 
-NSPoint NSNormalizePoint(NSPoint point)
+NSPoint FBNormalizePoint(NSPoint point)
 {
     NSPoint result = point;
-    CGFloat length = NSPointLength(point);
+    CGFloat length = FBPointLength(point);
     if ( length != 0.0 ) {
         result.x /= length;
         result.y /= length;
@@ -78,7 +78,7 @@ NSPoint NSNormalizePoint(NSPoint point)
     return result;
 }
 
-NSPoint NSNegatePoint(NSPoint point)
+NSPoint FBNegatePoint(NSPoint point)
 {
     return NSMakePoint(-point.x, -point.y);
 }
