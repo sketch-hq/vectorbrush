@@ -6,8 +6,7 @@
 //  Copyright 2011 Fortunate Bear, LLC. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
+#import <Cocoa/Cocoa.h>
 
 @interface NSBezierPath (Simplify)
 
