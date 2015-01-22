@@ -29,22 +29,22 @@ static CGFloat Determinant(CGFloat matrix1[2], CGFloat matrix2[2])
 //  however the functions below have been optimized for their value of i.
 static CGFloat Bernstein0(CGFloat input)
 {
-    return powf(1.0 - input, 3);
+    return pow(1.0 - input, 3);
 }
 
 static CGFloat Bernstein1(CGFloat input)
 {
-    return 3 * input * powf(1.0 - input, 2);
+    return 3 * input * pow(1.0 - input, 2);
 }
 
 static CGFloat Bernstein2(CGFloat input)
 {
-    return 3 * powf(input, 2) * (1.0 - input);
+    return 3 * pow(input, 2) * (1.0 - input);
 }
 
 static CGFloat Bernstein3(CGFloat input)
 {
-    return powf(input, 3);
+    return pow(input, 3);
 }
 
 static NSPoint BezierWithPoints(NSUInteger degree, NSPoint *bezierPoints, CGFloat parameter)
@@ -210,7 +210,7 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     // Use Newton's Method to refine our parameters.
     NSMutableArray *refinedParameters = [NSMutableArray arrayWithCapacity:range.length];
     for (NSUInteger i = 0; i < range.length; i++) {
-        [refinedParameters addObject:[NSNumber numberWithFloat:NewtonsMethod(bezier, [self fb_pointAtIndex:range.location + i], [[parameters objectAtIndex:i] floatValue])]];
+        [refinedParameters addObject:@(NewtonsMethod(bezier, [self fb_pointAtIndex:range.location + i], [[parameters objectAtIndex:i] doubleValue]))];
     }
     return refinedParameters;
 }
@@ -398,18 +398,18 @@ static CGFloat NewtonsMethod(NSBezierPath *bezier, NSPoint point, CGFloat parame
     //  the distance between [0..1])
     
     NSMutableArray *distances = [NSMutableArray arrayWithCapacity:range.length];
-    [distances addObject:[NSNumber numberWithFloat:0.0]]; // First one is always 0 (see above)
+    [distances addObject:@(0.0)]; // First one is always 0 (see above)
     CGFloat totalDistance = 0.0;
     for (NSUInteger i = 1; i < range.length; i++) {
         // Calculate the total distance along the curve up to this point
         totalDistance += FBDistanceBetweenPoints([self fb_pointAtIndex:range.location + i], [self fb_pointAtIndex:range.location + i - 1]);
-        [distances addObject:[NSNumber numberWithFloat:totalDistance]];
+        [distances addObject:@(totalDistance)];
     }
     
     // Now go through and normalize the distances to in the range [0..1]
     NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:range.length];
     for (NSNumber *distance in distances)
-        [parameters addObject:[NSNumber numberWithFloat:[distance floatValue] / totalDistance]];
+        [parameters addObject:@([distance floatValue] / totalDistance)];
 
     return parameters;
 }
