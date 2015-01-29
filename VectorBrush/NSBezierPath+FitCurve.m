@@ -11,6 +11,11 @@
 #import "Geometry.h"
 #import "math.h"
 
+void FBSuppressLinkWarning() {
+    // TODO: find a better way to do this...
+    NSLog(@"this is a dummy method which is here to suppress a linker warning, caused by the fact that the library only contained category methods and had no actual public functions");
+}
+
 // Algorithm implemented here is the one described in "An Algorithm for Automatically Fitting Digitized Curves"
 //  by Philip J. Schneider contained in the book Graphics Gems
 
