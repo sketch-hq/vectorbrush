@@ -12,7 +12,7 @@
 #import "math.h"
 
 void FBSuppressLinkWarning() {
-    // TODO: find a better way to do this...
+    // TODO #6510 - find a better way to do this...
     NSLog(@"this is a dummy method which is here to suppress a linker warning, caused by the fact that the library only contained category methods and had no actual public functions");
 }
 
