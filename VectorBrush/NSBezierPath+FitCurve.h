@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-extern void FBSuppressLinkWarning();
+extern void FBSuppressLinkWarning(void);
 
 @interface NSBezierPath (FitCurve)
 
