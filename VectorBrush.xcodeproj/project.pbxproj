@@ -272,7 +272,7 @@
 		A1C48AE6139089A10043E2C7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Fortunate Bear, LLC";
 				TargetAttributes = {
 					F589D57A1A6D62EC006761ED = {
