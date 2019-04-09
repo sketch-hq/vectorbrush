@@ -285,7 +285,7 @@
 			};
 			buildConfigurationList = A1C48AE9139089A10043E2C7 /* Build configuration list for PBXProject "VectorBrush" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
