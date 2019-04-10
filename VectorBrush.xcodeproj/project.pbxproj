@@ -42,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A835AFA225DE95D006EBCA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MyDocument.xib; sourceTree = "<group>"; };
+		5A835AFB225DE95D006EBCA2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		A1C48AEF139089A10043E2C7 /* VectorBrush.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VectorBrush.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1C48AF3139089A10043E2C7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		A1C48AF6139089A10043E2C7 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -54,8 +56,6 @@
 		A1C48B03139089A20043E2C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		A1C48B05139089A20043E2C7 /* MyDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
 		A1C48B06139089A20043E2C7 /* MyDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
-		A1C48B09139089A20043E2C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MyDocument.xib; sourceTree = "<group>"; };
-		A1C48B0C139089A20043E2C7 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		A1C48B13139089F60043E2C7 /* CanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CanvasView.h; sourceTree = "<group>"; };
 		A1C48B14139089F60043E2C7 /* CanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CanvasView.m; sourceTree = "<group>"; };
 		A1C48B1613908A130043E2C7 /* Canvas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Canvas.h; sourceTree = "<group>"; };
@@ -289,6 +289,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = A1C48AE4139089A10043E2C7;
 			productRefGroup = A1C48AF0139089A10043E2C7 /* Products */;
@@ -387,7 +388,7 @@
 		A1C48B08139089A20043E2C7 /* MyDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A1C48B09139089A20043E2C7 /* en */,
+				5A835AFA225DE95D006EBCA2 /* Base */,
 			);
 			name = MyDocument.xib;
 			sourceTree = "<group>";
@@ -395,7 +396,7 @@
 		A1C48B0B139089A20043E2C7 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A1C48B0C139089A20043E2C7 /* en */,
+				5A835AFB225DE95D006EBCA2 /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
