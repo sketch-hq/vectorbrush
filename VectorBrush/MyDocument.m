@@ -78,11 +78,11 @@
 {
     NSMenuItem *menuItem = (NSMenuItem *)anItem;
     if ( [anItem action] == @selector(toggleShowPoints:) ) {
-        [menuItem setState:_view.showPoints ? NSOnState : NSOffState];
+        [menuItem setState:_view.showPoints ? NSControlStateValueOn : NSControlStateValueOff];
     } else if ( [anItem action] == @selector(toggleSimplifyPath:) ) {
-        [menuItem setState:_view.simplify ? NSOnState : NSOffState];        
+        [menuItem setState:_view.simplify ? NSControlStateValueOn : NSControlStateValueOff];        
     } else if ( [anItem action] == @selector(toggleFitCurve:) ) {
-        [menuItem setState:_view.fitCurve ? NSOnState : NSOffState];
+        [menuItem setState:_view.fitCurve ? NSControlStateValueOn : NSControlStateValueOff];
     }
     
     return YES;
