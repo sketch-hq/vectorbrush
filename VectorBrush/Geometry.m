@@ -13,7 +13,7 @@ CGFloat FBDistanceBetweenPoints(NSPoint point1, NSPoint point2)
 {
     CGFloat xDelta = point2.x - point1.x;
     CGFloat yDelta = point2.y - point1.y;
-    return sqrtf(xDelta * xDelta + yDelta * yDelta);
+    return sqrtf((float) ((xDelta * xDelta) + (yDelta * yDelta)));
 }
 
 CGFloat FBDistancePointToLine(NSPoint point, NSPoint lineStartPoint, NSPoint lineEndPoint)
@@ -59,7 +59,7 @@ NSPoint FBSubtractPoint(NSPoint point1, NSPoint point2)
 
 CGFloat FBPointLength(NSPoint point)
 {
-    return sqrtf((point.x * point.x) + (point.y * point.y));
+    return sqrtf((float) ((point.x * point.x) + (point.y * point.y)));
 }
 
 CGFloat FBPointSquaredLength(NSPoint point)
