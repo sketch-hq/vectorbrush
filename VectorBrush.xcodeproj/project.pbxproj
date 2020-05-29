@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B4E54EA2477D66300BA20B3 /* Geometry.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B26139191550043E2C7 /* Geometry.m */; };
 		A1C48AF4139089A10043E2C7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1C48AF3139089A10043E2C7 /* Cocoa.framework */; };
 		A1C48AFE139089A20043E2C7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A1C48AFC139089A20043E2C7 /* InfoPlist.strings */; };
 		A1C48B01139089A20043E2C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C48B00139089A20043E2C7 /* main.m */; };
@@ -346,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F589D5921A6D6344006761ED /* NSBezierPath+Simplify.m in Sources */,
+				5B4E54EA2477D66300BA20B3 /* Geometry.m in Sources */,
 				F589D5931A6D6344006761ED /* NSBezierPath+FitCurve.m in Sources */,
 				F589D5941A6D6344006761ED /* NSBezierPath+Utilities.m in Sources */,
 			);
