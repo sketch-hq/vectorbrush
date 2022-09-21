@@ -8,6 +8,8 @@
 
 #import "NSBezierPath+Utilities.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 @implementation NSBezierPath (FBUtilities)
 
@@ -99,3 +101,5 @@
 }
 
 @end
+
+#pragma clang diagnostic pop
