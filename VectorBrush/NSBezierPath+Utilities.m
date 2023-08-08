@@ -35,6 +35,8 @@
             element.controlPoints[1] = points[1];
             element.point = points[2];
             break;
+        default:
+            break;
     }
     return element;
 }
@@ -96,6 +98,8 @@
             break;
         case NSClosePathBezierPathElement:
             [self closePath];
+            break;
+        default:
             break;
     }
 }
