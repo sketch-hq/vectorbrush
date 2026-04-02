@@ -8,8 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-extern void FBSuppressLinkWarning(void);
-
 @interface NSBezierPath (FitCurve)
 
 - (NSBezierPath *) fb_fitCurve:(CGFloat)errorThreshold;
